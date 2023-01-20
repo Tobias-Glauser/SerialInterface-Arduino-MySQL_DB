@@ -2,10 +2,13 @@ package org.example;
 
 import com.fazecast.jSerialComm.SerialPort;
 
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         SerialPort comPort = getPort();
 
         if (comPort == null) {

@@ -18,7 +18,7 @@ public class MySQLAccess {
                             "/" + databaseInformations.getDBName(), databaseInformations.getUsername(), databaseInformations.getPassword());
 
             this.preparedStatement = this.connection
-                    .prepareStatement("insert into  flight_data values (null, ?, ?, ?, ? , ?, ?)");
+                    .prepareStatement("insert into  flight_data values (null, ?, ?, ?, ? , ?, ?, ?)");
 
             this.preparedStatement.setString(1, flightData.getFk_id_flight());
             this.preparedStatement.setString(2, flightData.getTime_stamp());

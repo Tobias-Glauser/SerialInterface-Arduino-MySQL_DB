@@ -1,6 +1,9 @@
 package org.example;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class FlightData {
     private Integer fk_id_flight;
@@ -12,7 +15,13 @@ public class FlightData {
     private Double air_pressure;
 
     public FlightData(Integer fk_id_flight, LocalDateTime time_stamp, Double co2, Double temperature, String gps, Double humidity, Double air_pressure) {
-
+        setFk_id_flight(fk_id_flight);
+        setTime_stamp(time_stamp);
+        setCo2(co2);
+        setTemperature(temperature);
+        setGps(gps);
+        setHumidity(humidity);
+        setAir_pressure(air_pressure);
     }
 
     public void setFk_id_flight(Integer fk_id_flight) {
@@ -54,7 +63,8 @@ public class FlightData {
     }
 
     public String getTime_stamp() {
-        return "\"" + time_stamp + "\"";
+
+        return time_stamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     public String getCo2() {
@@ -66,7 +76,7 @@ public class FlightData {
     }
 
     public String getGps() {
-        return "\"" + gps + "\"";
+        return gps;
     }
 
     public String getHumidity() {
