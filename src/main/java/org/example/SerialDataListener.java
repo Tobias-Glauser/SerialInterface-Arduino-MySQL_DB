@@ -8,9 +8,13 @@ import static java.lang.System.exit;
 
 public class SerialDataListener implements SerialPortDataListener {
     private final SerialPort comPort;
+    private final MySQLAccess mySQLAccess;
+    private String completeString;
+    private int count = 0;
 
     public SerialDataListener(SerialPort comPort) {
         this.comPort = comPort;
+        this.mySQLAccess = new MySQLAccess();
     }
 
     @Override
@@ -24,7 +28,26 @@ public class SerialDataListener implements SerialPortDataListener {
                 byte[] newData = new byte[comPort.bytesAvailable()];
                 int numRead = comPort.readBytes(newData, newData.length);
                 System.out.println("Read " + numRead + " bytes.");
-                System.out.println(new String(newData));
+                completeString += new String(newData);
+                if (completeString.contains("\r\n")) {
+                    //Split completeString into two strings at \r\n
+                    String[] splitString = completeString.split("\r\n");
+
+                    System.out.println("Complete string: " + completeString);
+                    System.out.println("Split string 0: " + splitString[0]);
+                    count++;
+                    if (count != 1) {
+                        try {
+                            mySQLAccess.insertData(new FlightData(splitString[0]));
+                        } catch (Exception e) {
+                            System.err.println("Error inserting data into database. With message: " + e.getMessage());
+                        }
+                    }
+                    completeString = splitString.length > 1 ? splitString[1] : "";
+                    System.out.println("Incomplete string: " + completeString);
+
+                }
+                // System.out.println(new String(newData));
                 break;
             case SerialPort.LISTENING_EVENT_PORT_DISCONNECTED:
                 System.err.println("Break interrupt detected.");

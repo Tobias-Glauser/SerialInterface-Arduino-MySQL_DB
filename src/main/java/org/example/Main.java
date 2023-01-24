@@ -2,8 +2,6 @@ package org.example;
 
 import com.fazecast.jSerialComm.SerialPort;
 
-import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class Main {
@@ -15,7 +13,7 @@ public class Main {
             System.err.println("No COM port found.");
             System.exit(1);
         }
-
+//
         comPort.openPort();
         comPort.getInputStream();
         comPort.addDataListener(new SerialDataListener(comPort));
