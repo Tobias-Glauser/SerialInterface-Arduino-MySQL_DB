@@ -27,14 +27,14 @@ public class SerialDataListener implements SerialPortDataListener {
             case SerialPort.LISTENING_EVENT_DATA_AVAILABLE:
                 byte[] newData = new byte[comPort.bytesAvailable()];
                 int numRead = comPort.readBytes(newData, newData.length);
-                System.out.println("Read " + numRead + " bytes.");
+                System.out.println("\n\nRead " + numRead + " bytes.");
                 completeString += new String(newData);
                 if (completeString.contains("\r\n")) {
                     //Split completeString into two strings at \r\n
                     String[] splitString = completeString.split("\r\n");
 
-                    System.out.println("Complete string: " + completeString);
-                    System.out.println("Split string 0: " + splitString[0]);
+                    System.out.println("Complete string: " + completeString.substring(0, completeString.length() - 1));
+                    System.out.println("Inserted string: " + splitString[0]);
                     count++;
                     if (count != 1) {
                         try {

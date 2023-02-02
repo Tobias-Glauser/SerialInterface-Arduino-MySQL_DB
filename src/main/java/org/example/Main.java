@@ -22,10 +22,10 @@ public class Main {
 
     private static SerialPort getPort() {
         SerialPort [] ports = SerialPort.getCommPorts();
-        System.out.println("Ports disponibles: " + ports.length);
+        System.out.println("Available ports: " + ports.length);
 
         if (ports.length == 0) {
-            System.err.println("aucuns ports disponibles");
+            System.err.println("No ports available");
             System.exit(1);
         }
 
@@ -36,18 +36,18 @@ public class Main {
         int portNumber = 0;
         do {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Entrer le numéro du port à utiliser : ");
+            System.out.println("Enter port number: ");
             portNumber = scanner.nextInt();
 
             if (portNumber > 0 && portNumber <= ports.length) {
                 validPort = true;
             } else {
-                System.err.println("Port invalide.");
+                System.err.println("Invalid port.");
             }
         } while (!validPort);
 
 
-        System.out.println("Port choisi : " + ports[portNumber-1].getSystemPortName());
+        System.out.println("Serial interface is now listening on " + ports[portNumber-1].getSystemPortName()+ " : " + ports[portNumber-1].getDescriptivePortName());
         return ports[portNumber-1];
     }
 }
