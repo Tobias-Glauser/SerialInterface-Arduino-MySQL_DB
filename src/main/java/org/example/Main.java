@@ -16,7 +16,7 @@ public class Main {
 //
         comPort.openPort();
         comPort.getInputStream();
-        comPort.addDataListener(new SerialDataListener(comPort));
+        comPort.addDataListener(new SerialDataListener(comPort, getFlight()));
 
     }
 
@@ -49,5 +49,22 @@ public class Main {
 
         System.out.println("Serial interface is now listening on " + ports[portNumber-1].getSystemPortName()+ " : " + ports[portNumber-1].getDescriptivePortName());
         return ports[portNumber-1];
+    }
+
+    private static int getFlight() {
+        Integer flightId = null;
+        boolean validFlightId = false;
+        do {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Flight id : ");
+            flightId = scanner.nextInt();
+            if (flightId >= 0) {
+                validFlightId = true;
+            } else {
+                System.out.println("Flight id invalid. Please enter another flight id : ");
+            }
+        } while (!validFlightId);
+
+        return flightId;
     }
 }
