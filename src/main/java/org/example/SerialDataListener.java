@@ -13,7 +13,7 @@ public class SerialDataListener implements SerialPortDataListener {
     private final MySQLAccess mySQLAccess;
     private String completeString = "";
     private int count = 0;
-    private int flightId;
+    private final int flightId;
 
     public SerialDataListener(SerialPort comPort, int flightId) {
         this.comPort = comPort;
@@ -51,14 +51,10 @@ public class SerialDataListener implements SerialPortDataListener {
      */
     private void addDataInDB(byte[] newData) {
         completeString += new String(newData);
-        System.out.printf("new data: %s : data%n", new String(newData));
-        System.out.println("asdf" + completeString+ "foobar");
-        System.out.println(completeString.contains("\r\n") ? "Contains" : "Doesn't contain");
         if (completeString.contains("\r\n")) {
             //Split completeString into two strings at last \r\n occurrence
             String[] splitString = completeString.split("\r\n");
 
-            System.out.println(completeString);
             System.out.println("Complete string: \n\"" + completeString.substring(0, completeString.length() - 1) + "\"");
             System.out.println("Insert string: \"" + splitString[0] + "\"");
             count++;
