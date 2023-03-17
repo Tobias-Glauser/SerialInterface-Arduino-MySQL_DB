@@ -1,20 +1,20 @@
 package org.example;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
 
-import static java.lang.System.exit;
-
 public class MySQLAccess {
-
-    private final MySQLDatabaseInformations databaseInformations = new MySQLDatabaseInformations();
     private Connection connection;
+    private final Dotenv dotenv = Dotenv.configure().directory(System.getProperty("user.dir").replace("\\", "/")).ignoreIfMissing().load();
 
     public MySQLAccess() {
+
         try {
             connection = DriverManager
-                    .getConnection("jdbc:mysql://" + databaseInformations.getHost() + ":" + databaseInformations.getPort() +
-                            "/" + databaseInformations.getDBName(), databaseInformations.getUsername(), databaseInformations.getPassword());
+                    .getConnection("jdbc:mysql://" + dotenv.get("HOST") + ":" + dotenv.get("PORT") +
+                            "/" + dotenv.get("DB_NAME"), dotenv.get("DB_USERNAME"), dotenv.get("PASSWORD"));
         } catch (SQLException e) {
             System.err.println("Erreur de connexion à la base de données.");
         }
@@ -64,8 +64,8 @@ public class MySQLAccess {
 
             try {
                 connection = DriverManager
-                        .getConnection("jdbc:mysql://" + databaseInformations.getHost() + ":" + databaseInformations.getPort() +
-                                "/" + databaseInformations.getDBName(), databaseInformations.getUsername(), databaseInformations.getPassword());
+                        .getConnection("jdbc:mysql://" + dotenv.get("HOST") + ":" + dotenv.get("PORT") +
+                                "/" + dotenv.get("DB_NAME"), dotenv.get("USERNAME"), dotenv.get("PASSWORD"));
             } catch (SQLException ex) {
                 System.err.println("Erreur de connexion à la base de données.");
             }
